@@ -18,6 +18,7 @@ MATLAB - Mapping Toolbox (optional)
 -----
 
 # MATLAB Central
+[![View Voronoi bounded rectangular or square limits on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/106380-voronoi-bounded-rectangular-or-square-limits)
 
 
 
