@@ -8,7 +8,7 @@ function [vxO,vyO,vxClip,vyClip] = VoronoiLimitRectSquare(X, Y, VoronoiBoundary,
 %*                                                                      *%
 %* Author: Preetham Manjunatha                                          *%
 %* Github link: https://github.com/preethamam                           *%
-%* Date: 02/08/2022                                                     *%
+%* Date: 06/08/2022                                                     *%
 %************************************************************************%
 %
 %************************************************************************%
@@ -113,27 +113,11 @@ imY1 = VoronoiBoundary(3);
 imY2 = VoronoiBoundary(4);
 
 %% ------------------------------------------------------------------------------------------------------------------------
-% Discard out of boundary points
-[rowvX,colvX] = find(vx < imX1 | vx > imX2);
-[rowvY,colvY] = find(vy < imY1 | vy > imY2);
-
-% Indices to unique values in column 3
-[~, indvY] = unique(colvY);
-[~, indvX] = unique(colvX);
-
-% Duplicate values
-duplicatevX = colvX(setdiff(1:numel(colvX), indvX));
-duplicatevY = colvY(setdiff(1:numel(colvY), indvY));
-
-% Valid vertices within the limits
-vx(:,[duplicatevX;duplicatevY]) = [];
-vy(:,[duplicatevX;duplicatevY]) = [];
-
-%% ------------------------------------------------------------------------------------------------------------------------
 % Left edge of a rectangle/square
 [row_left,col_left] = find(vx < imX1);
 leftEdgeVertsX = vx(:, col_left);
 leftEdgeVertsY = vy(:, col_left);
+xiLeft = []; yiLeft = [];
 
 for i = 1:size(leftEdgeVertsX,2)
     if mapToolBoxLicense
@@ -148,17 +132,26 @@ for i = 1:size(leftEdgeVertsX,2)
         xiLeft(i) = xiLeftval;  yiLeft(i) = yiLeftval;
     end
 end
-[rowNaNLeft, colNaNLeft] = find(isnan(xiLeft));
-row_left(colNaNLeft) = [];
-col_left(colNaNLeft) = [];
-xiLeft(isnan(xiLeft)) = [];
-yiLeft(isnan(yiLeft)) = [];
+
+if isempty(xiLeft) || isempty(yiLeft)
+    row_left = [];
+    col_left = [];
+    xiLeft = [];
+    yiLeft = [];
+else
+    [rowNaNLeft, colNaNLeft] = find(isnan(xiLeft));
+    row_left(colNaNLeft) = [];
+    col_left(colNaNLeft) = [];
+    xiLeft(isnan(xiLeft)) = [];
+    yiLeft(isnan(yiLeft)) = [];
+end
 
 %------------------------------------------------------------------------------------------------------------------------
 % Right edge of a rectangle/square
 [row_right,col_right] = find(vx > imX2);
 rightEdgeVertsX = vx(:, col_right);
 rightEdgeVertsY = vy(:, col_right);
+xiRight = []; yiRight = [];
 
 for i = 1:size(rightEdgeVertsX,2)  
     if mapToolBoxLicense
@@ -173,17 +166,26 @@ for i = 1:size(rightEdgeVertsX,2)
         xiRight(i) = xiRightval;  yiRight(i) = yiRightval;
     end
 end
-[rowNaNRight, colNaNRight] = find(isnan(xiRight));
-row_right(colNaNRight) = [];
-col_right(colNaNRight) = [];
-xiRight(isnan(xiRight)) = [];
-yiRight(isnan(yiRight)) = [];
+
+if isempty(xiRight) || isempty(yiRight)
+    row_right = [];
+    col_right = [];
+    xiRight = [];
+    yiRight = [];
+else
+    [rowNaNRight, colNaNRight] = find(isnan(xiRight));
+    row_right(colNaNRight) = [];
+    col_right(colNaNRight) = [];
+    xiRight(isnan(xiRight)) = [];
+    yiRight(isnan(yiRight)) = [];
+end
 
 %------------------------------------------------------------------------------------------------------------------------
 % Bottom edge of a rectangle/square
 [row_bot,col_bot] = find(vy < imY1);
 botEdgeVertsX = vx(:, col_bot);
 botEdgeVertsY = vy(:, col_bot);
+xiBot = []; yiBot = [];
 
 for i = 1:size(botEdgeVertsX,2)
     if mapToolBoxLicense
@@ -197,17 +199,26 @@ for i = 1:size(botEdgeVertsX,2)
         xiBot(i) = xiBotval;  yiBot(i) = yiBotval;
     end
 end
-[rowNaNBot, colNaNBot] = find(isnan(xiBot));
-row_bot(colNaNBot) = [];
-col_bot(colNaNBot) = [];
-xiBot(isnan(xiBot)) = [];
-yiBot(isnan(yiBot)) = [];
+
+if isempty(xiBot) || isempty(yiBot)
+    row_bot = [];
+    col_bot = [];
+    xiBot = [];
+    yiBot = [];
+else
+    [rowNaNBot, colNaNBot] = find(isnan(xiBot));
+    row_bot(colNaNBot) = [];
+    col_bot(colNaNBot) = [];
+    xiBot(isnan(xiBot)) = [];
+    yiBot(isnan(yiBot)) = [];
+end
 
 %------------------------------------------------------------------------------------------------------------------------
 % Top edge of a rectangle/square
 [row_top,col_top] = find(vy > imY2);
 topEdgeVertsX = vx(:, col_top);
 topEdgeVertsY = vy(:, col_top);
+xiTop = []; yiTop = [];
 
 for i = 1:size(topEdgeVertsX,2)
     if mapToolBoxLicense
@@ -221,11 +232,19 @@ for i = 1:size(topEdgeVertsX,2)
         xiTop(i) = xiTopval;  yiTop(i) = yiTopval;
     end
 end
-[rowNaNTop, colNaNTop] = find(isnan(xiTop));
-row_top(colNaNTop)  = [];
-col_top(colNaNTop)  = [];
-xiTop(isnan(xiTop)) = [];
-yiTop(isnan(yiTop)) = [];
+
+if isempty(xiTop) || isempty(yiTop)
+    row_top = [];
+    col_top = [];
+    xiTop = [];
+    yiTop = [];
+else
+    [rowNaNTop, colNaNTop] = find(isnan(xiTop));
+    row_top(colNaNTop)  = [];
+    col_top(colNaNTop)  = [];
+    xiTop(isnan(xiTop)) = [];
+    yiTop(isnan(yiTop)) = [];
+end
 
 %% ------------------------------------------------------------------------------------------------------------------------
 % Stack the arrays to cell
@@ -241,6 +260,23 @@ for i = 1:length(row2clip)
         vy(row2clip{i}(j), col2clip{i}(j)) = xyIntersections{i}(j,2);
     end
 end
+
+%% ------------------------------------------------------------------------------------------------------------------------
+% Discard out of boundary points
+[rowvX,colvX] = find(vx < imX1 | vx > imX2);
+[rowvY,colvY] = find(vy < imY1 | vy > imY2);
+
+% Indices to unique values in column
+[~, indvY] = unique(colvY);
+[~, indvX] = unique(colvX);
+
+% Duplicate values
+duplicatevX = colvX(setdiff(1:numel(colvX), indvX));
+duplicatevY = colvY(setdiff(1:numel(colvY), indvY));
+
+% Valid vertices within the limits
+vx(:,[duplicatevX;duplicatevY]) = [];
+vy(:,[duplicatevX;duplicatevY]) = [];
 
 %% ------------------------------------------------------------------------------------------------------------------------
 % Clip vertices values
@@ -283,8 +319,6 @@ if showFigure
     axis equal
     title('Bounded Voronoi Diagram')
     linkaxes([ax1 ax2 ax3],'xy')
-
-    exportgraphics(gcf,'clippedVoronoiPlot.png')
 end
 end
 
