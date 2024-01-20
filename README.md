@@ -1,4 +1,7 @@
 # VoronoiLimitRectSquare
+
+[![View Voronoi bounded rectangular or square limits on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/106380-voronoi-bounded-rectangular-or-square-limits) [![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=preethamam/VoronoiLimitRectSquare)
+
 Provides a bounded Voronoi Diagram with vertices similar to MATLAB [vx,vy] = voronoi(x,y). In other words, prunes the edges that extend the boundaries of the given x and y values.
 
 -----
@@ -17,8 +20,6 @@ MATLAB - Mapping Toolbox (optional)
 
 -----
 
-# MATLAB Central
-[![View Voronoi bounded rectangular or square limits on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/106380-voronoi-bounded-rectangular-or-square-limits)
-
+# Feedback
 Please rate and provide feedback for the further improvements.
 
