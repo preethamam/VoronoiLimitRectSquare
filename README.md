@@ -16,7 +16,7 @@ Provides a bounded Voronoi Diagram with vertices similar to MATLAB [vx,vy] = vor
 
 # Requirements
 MATLAB <br />
-MATLAB - Mapping Toolbox (optional)
+Mapping Toolbox (optional)
 
 -----
 
